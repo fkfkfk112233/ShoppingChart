@@ -1,0 +1,36 @@
+package service.impl;
+
+import dao.UserDao;
+import dao.impl.UserDaoImpl;
+import model.Users;
+import service.UserService;
+
+public class UserServiceImpl implements UserService{
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public boolean register(Users user) {
+		// TODO Auto-generated method stub
+		Users dbUser = dao.selectByAccount(user.getAccount());
+		
+	    if(dbUser != null) {
+
+	        return false;
+	    }
+
+	    dao.insert(user);
+
+	    return true;
+	}
+
+	@Override
+	public Users login(String account, String password) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

@@ -1,0 +1,19 @@
+package dao;
+
+import model.User;
+
+public interface UserDao {
+	//create
+	void add(String account, String password);
+	void add(User user);
+	
+	//read
+	String selectAll();
+	
+	//update
+	void update(User user);
+	
+	//delete
+	
+
+}

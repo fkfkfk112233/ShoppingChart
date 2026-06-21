@@ -1,0 +1,11 @@
+package service.impl;
+
+import model.Users;
+
+public interface UserService {
+	
+	boolean register(Users user);
+	
+	Users login(String account, String password);
+
+}

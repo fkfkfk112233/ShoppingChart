@@ -1,0 +1,36 @@
+package dao.impl;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+import dao.UserDao;
+import model.User;
+import util.DbConnection;
+
+public class UserDaoImpl {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+	
+	Connection conn=DbConnection.getDb();
+	
+	public void insert(User user) {
+		String sql="insert into user(account, password, name, product_name, amount, sum)"
+				+"value(?,?,?,?,?,?)";
+		try {
+			PreparedStatement ps=conn.prepareStatement(sql);
+			ps.setString(1, user.getAccount());
+			ps.setString(2, user.getPassword());
+			ps.setString(3, user.getName());
+			ps.setString(4, user.getProduct_name());
+			ps.setInt(5, user.getAmount());
+			ps.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+}

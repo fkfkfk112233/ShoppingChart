@@ -1,0 +1,59 @@
+package model;
+
+public class Users {
+	private int userId;
+	private String account;
+	private String password;
+	private String name;
+	private int roleId;
+	private String createAt;
+	public Users() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public Users(String account, String password, String name, int roleId) {
+		super();
+		this.account = account;
+		this.password = password;
+		this.name = name;
+		this.roleId = roleId;
+	}
+	public int getUserId() {
+		return userId;
+	}
+	public void setUserId(int id) {
+		this.userId = id;
+	}
+	public String getAccount() {
+		return account;
+	}
+	public void setAccount(String account) {
+		this.account = account;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public int getRoleId() {
+		return roleId;
+	}
+	public void setRoleId(int roleId) {
+		this.roleId = roleId;
+	}
+	public String getCreateAt() {
+		return createAt;
+	}
+	public void setCreateAt(String createAt) {
+		this.createAt = createAt;
+	}
+	
+	
+}

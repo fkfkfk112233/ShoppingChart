@@ -1,0 +1,16 @@
+package dao;
+
+import model.User;
+
+public interface UserDao {
+	
+	//註冊
+	void insert(User user);
+	
+	//查帳號
+	User selectByAccount(String account);
+	
+	//登入
+	User selectByAccountAndPassword(String account, String password);
+
+}

@@ -1,0 +1,13 @@
+package service;
+
+import model.Users;
+
+public interface UserService {
+	
+	//帳號是否重複
+	boolean register(Users user);
+	
+	//帳號密碼是否一致
+	Users login(String account, String password);
+
+}
