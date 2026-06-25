@@ -10,7 +10,7 @@ public interface UserService {
 	//註冊, 新增
 	void createUser(Users user);
 	
-	//檢查帳號是否重複
+	//帳號是否重複
 	boolean checkAccount(String account);
 	
 
