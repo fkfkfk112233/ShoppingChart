@@ -1,0 +1,140 @@
+package controller.user;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+
+import model.Roles;
+import model.Users;
+import service.UserService;
+import service.impl.UserServiceImpl;
+
+import javax.swing.JLabel;
+import java.awt.Font;
+import javax.swing.JTextField;
+import javax.swing.JComboBox;
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+public class AddUser extends JFrame {
+
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
+	private JTextField acc;
+	private JTextField pwd;
+	private JTextField name;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					AddUser frame = new AddUser();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public AddUser() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 350, 420);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JLabel lblNewLabel = new JLabel("註冊");
+		lblNewLabel.setFont(new Font("新細明體", Font.BOLD, 20));
+		lblNewLabel.setBounds(135, 10, 50, 50);
+		contentPane.add(lblNewLabel);
+		
+		JLabel lblNewLabel_1 = new JLabel("帳號：");
+		lblNewLabel_1.setFont(new Font("新細明體", Font.BOLD, 14));
+		lblNewLabel_1.setBounds(35, 70, 45, 30);
+		contentPane.add(lblNewLabel_1);
+		
+		JLabel lblNewLabel_1_1 = new JLabel("密碼：");
+		lblNewLabel_1_1.setFont(new Font("新細明體", Font.BOLD, 14));
+		lblNewLabel_1_1.setBounds(35, 110, 45, 30);
+		contentPane.add(lblNewLabel_1_1);
+		
+		JLabel lblNewLabel_1_1_1 = new JLabel("姓名：");
+		lblNewLabel_1_1_1.setFont(new Font("新細明體", Font.BOLD, 14));
+		lblNewLabel_1_1_1.setBounds(35, 150, 45, 30);
+		contentPane.add(lblNewLabel_1_1_1);
+		
+		acc = new JTextField();
+		acc.setBounds(90, 75, 210, 20);
+		contentPane.add(acc);
+		acc.setColumns(10);
+		
+		pwd = new JTextField();
+		pwd.setColumns(10);
+		pwd.setBounds(90, 115, 210, 20);
+		contentPane.add(pwd);
+		
+		name = new JTextField();
+		name.setBounds(90, 155, 96, 20);
+		contentPane.add(name);
+		name.setColumns(10);
+		
+		JLabel msg = new JLabel("");
+		msg.setBounds(35, 245, 270, 50);
+		contentPane.add(msg);
+		
+		/**********************event**********************/
+		UserService usi=new UserServiceImpl();
+		
+		JComboBox<Roles> role = new JComboBox<>();
+		role.addItem(new Roles(2, "一般使用者"));
+		role.addItem(new Roles(1, "管理員"));
+		role.setBounds(196, 154, 105, 22);
+		contentPane.add(role);
+		
+		JButton add = new JButton("註冊");
+		add.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				String account=acc.getText();
+				
+				if(usi.checkAccount(account))
+				{
+					msg.setText("帳號已被註冊");
+				}
+				else
+				{
+					String Account=acc.getText();
+					String Password=pwd.getText();
+					String Name=name.getText();
+					Roles selectedRole = (Roles) role.getSelectedItem();
+					int RoleId = selectedRole.getRoleId();
+					
+					
+					Users user=new Users(Account, Password, Name, RoleId);
+					
+					usi.createUser(user);
+					
+					msg.setText("註冊成功");
+					
+					
+				}
+			}
+		});
+		add.setBounds(120, 200, 84, 22);
+		contentPane.add(add);
+		
+	}
+}

@@ -117,23 +117,19 @@ public class LoginUi extends JFrame {
 				
 				if(user!=null)
 				{
-					AdminUi adminui=new AdminUi();
-					adminui.setVisible(true);
-					dispose();
-					/*
-					if(getRoleId() == 1)
+
+					if(user.getRoleId() == 1)
 					{
-						AdminUi adminui=new AdminUi();
-						adminui.setVisible(true);
-						dispose();
+						new AdminUi().setVisible(true);
 					}
 					else
 					{
-						UserUi userui=new UserUi();
-						userui.setVisible(true);
-						dispose();
+						new UserUi().setVisible(true);
+						
 					}
-					*/
+					
+					dispose();
+					
 				}
 				else
 				{

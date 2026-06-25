@@ -20,6 +20,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.LocalTime;
 
 public class AddUser extends JFrame {
 
@@ -91,10 +92,14 @@ public class AddUser extends JFrame {
 		contentPane.add(name);
 		name.setColumns(10);
 		
+		JLabel msg = new JLabel("");
+		msg.setBounds(35, 190, 270, 105);
+		contentPane.add(msg);
+		
 		/**********************event**********************/
 		UserService usi=new UserServiceImpl();
 		
-		JComboBox<Roles> role = new JComboBox();
+		JComboBox<Roles> role = new JComboBox<>();
 		role.addItem(new Roles(2, "一般使用者"));
 		role.addItem(new Roles(1, "管理員"));
 		role.setBounds(196, 154, 105, 22);
@@ -108,7 +113,7 @@ public class AddUser extends JFrame {
 				
 				if(usi.checkAccount(account))
 				{
-					acc.setText("帳號已被註冊");
+					msg.setText("帳號已被註冊");
 				}
 				else
 				{
@@ -119,12 +124,22 @@ public class AddUser extends JFrame {
 					int RoleId = selectedRole.getRoleId();
 					
 					
-					Users user=new Users(Account, Password, Name, RoleId);
+					Users user=new Users();
+					
+					usi.createUser(user);
+					
+					msg.setText("註冊成功");
+					
+					
 				}
 			}
 		});
-		add.setBounds(120, 215, 84, 22);
+		add.setBounds(100, 310, 84, 22);
 		contentPane.add(add);
-
+		
+		JButton btnNewButton = new JButton("登入");
+		btnNewButton.setBounds(215, 310, 84, 22);
+		contentPane.add(btnNewButton);
+		
 	}
 }

@@ -1,0 +1,45 @@
+package service.impl;
+
+import dao.UserDao;
+import dao.impl.UserDaoImpl;
+import model.Users;
+import service.UserService;
+
+public class UserServiceImpl implements UserService{
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+	
+	UserDao udi=new UserDaoImpl();
+	
+	@Override
+	public Users login(String account, String password) {
+		// TODO Auto-generated method stub
+		return udi.selectByAccountAndPassword(account, password, 0);
+		
+	}
+	
+	@Override
+	public void createUser(Users user) {
+		// TODO Auto-generated method stub
+		udi.insert(user);
+	}
+
+	@Override
+	public boolean checkAccount(String account) {
+		// TODO Auto-generated method stub
+		boolean x=false;
+		
+		Users user = udi.selectByAccount(account);
+		
+	    if(user != null) 
+	    	
+	    	x=true;
+
+	        return x;
+	    
+	}
+
+}
