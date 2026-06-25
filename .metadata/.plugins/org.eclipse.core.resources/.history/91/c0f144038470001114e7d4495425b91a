@@ -49,9 +49,7 @@ public class UserDaoImpl implements UserDao{
 						+"id:"+rs.getInt("id")
 						+"\t帳號："+rs.getString("account")
 						+"\t密碼："+rs.getString("password")
-						+"\t姓名："+rs.getString("name")
-						+"\t："+rs.getString("role");
-				
+						+"\t姓名："+rs.getString("name");
 			}
 			
 		} catch (SQLException e) {
@@ -128,7 +126,7 @@ public class UserDaoImpl implements UserDao{
 		Users user=null;
 		String sql="select * from users where account=? and password=?";
 		try {
-		PreparedStatement ps=conn.prepareStatement(sql);
+		PreparedStatement ps = conn.prepareStatement(sql);
 		ps.setString(1, account);
 		ps.setString(2, password);
 		ResultSet rs = ps.executeQuery();

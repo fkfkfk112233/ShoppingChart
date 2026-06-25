@@ -49,9 +49,7 @@ public class UserDaoImpl implements UserDao{
 						+"id:"+rs.getInt("id")
 						+"\t帳號："+rs.getString("account")
 						+"\t密碼："+rs.getString("password")
-						+"\t姓名："+rs.getString("name")
-						+"\t："+rs.getString("role");
-				
+						+"\t姓名："+rs.getString("name");
 			}
 			
 		} catch (SQLException e) {
@@ -65,16 +63,15 @@ public class UserDaoImpl implements UserDao{
 	@Override
 	public Users selectByAccount(String account) {
 		// TODO Auto-generated method stub
-		Users user=null;
 		String sql ="select * from users where account=?";
 		
 		try {
-		PreparedStatement ps=conn.prepareStatement(sql);
+		PreparedStatement ps = conn.prepareStatement(sql);
 		ps.setString(1, account);
 		ResultSet rs = ps.executeQuery();
 		
 		if(rs.next()) {
-			user = new Users();
+			Users user = new Users();
 			
             user.setUserId(rs.getInt("user_id"));
             user.setAccount(rs.getString("account"));
@@ -82,59 +79,28 @@ public class UserDaoImpl implements UserDao{
             user.setName(rs.getString("name"));
             user.setRoleId(rs.getInt("role_id"));
             
+            return user;
 		}
 		
 		}catch(Exception e) {
-			// TODO Auto-generated catch block
 			 e.printStackTrace();
 		}
 		
-		return user;
-	}
-	
-	@Override
-	public Users selectByName(String name) {
-		// TODO Auto-generated method stub
-		Users user=null;
-		String sql ="select * from users where name=?";
-		
-		try {
-			PreparedStatement ps=conn.prepareStatement(sql);
-			ps.setString(1, name);
-			ResultSet rs = ps.executeQuery();
-			
-			if(rs.next()) {
-				user = new Users();
-				
-	            user.setUserId(rs.getInt("user_id"));
-	            user.setAccount(rs.getString("account"));
-	            user.setPassword(rs.getString("password"));
-	            user.setName(rs.getString("name"));
-	            user.setRoleId(rs.getInt("role_id"));
-	            
-			}
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return user;
+		return null;
 	}
 
 	@Override
 	public Users selectByAccountAndPassword(String account, String password) {
 		// TODO Auto-generated method stub
-		Users user=null;
 		String sql="select * from users where account=? and password=?";
 		try {
-		PreparedStatement ps=conn.prepareStatement(sql);
+		PreparedStatement ps = conn.prepareStatement(sql);
 		ps.setString(1, account);
 		ps.setString(2, password);
 		ResultSet rs = ps.executeQuery();
 		
 		if(rs.next()) {
-			user = new Users();
+			Users user = new Users();
 			
             user.setUserId(rs.getInt("user_id"));
             user.setAccount(rs.getString("account"));
@@ -142,13 +108,14 @@ public class UserDaoImpl implements UserDao{
             user.setName(rs.getString("name"));
             user.setRoleId(rs.getInt("role_id"));
             
+            return user;
 		}
 		
 		}catch(Exception e) {
 			 e.printStackTrace();
 		}
 		
-		return user;
+		return null;
 	}
 
 	@Override

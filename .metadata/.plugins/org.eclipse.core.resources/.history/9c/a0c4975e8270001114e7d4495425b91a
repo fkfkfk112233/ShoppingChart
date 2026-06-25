@@ -10,7 +10,8 @@ public interface UserDao {
 	//read
 	String selectAll();
 	Users selectByAccount(String account);
-	Users selectByName(String name);
+	
+	//登入
 	Users selectByAccountAndPassword(String account, String password);
 	
 	//update
