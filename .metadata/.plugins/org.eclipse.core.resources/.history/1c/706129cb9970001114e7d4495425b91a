@@ -5,21 +5,12 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
-import model.Roles;
-import model.Users;
-import service.UserService;
-import service.impl.UserServiceImpl;
-
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
-import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 public class AddUser extends JFrame {
 
@@ -91,38 +82,12 @@ public class AddUser extends JFrame {
 		contentPane.add(name);
 		name.setColumns(10);
 		
-		/**********************event**********************/
-		UserService usi=new UserServiceImpl();
-		
-		JComboBox<Roles> role = new JComboBox();
-		role.addItem(new Roles(2, "一般使用者"));
-		role.addItem(new Roles(1, "管理員"));
+		JComboBox role = new JComboBox();
+		role.setModel(new DefaultComboBoxModel(new String[] {"一般使用者", "管理員"}));
 		role.setBounds(196, 154, 105, 22);
 		contentPane.add(role);
 		
 		JButton add = new JButton("註冊");
-		add.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				String account=acc.getText();
-				
-				if(usi.checkAccount(account))
-				{
-					acc.setText("帳號已被註冊");
-				}
-				else
-				{
-					String Account=acc.getText();
-					String Password=pwd.getText();
-					String Name=name.getText();
-					Roles selectedRole = (Roles) role.getSelectedItem();
-					int RoleId = selectedRole.getRoleId();
-					
-					
-					Users user=new Users(Account, Password, Name, RoleId);
-				}
-			}
-		});
 		add.setBounds(120, 215, 84, 22);
 		contentPane.add(add);
 
