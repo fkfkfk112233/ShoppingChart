@@ -126,7 +126,12 @@ public class UserDaoImpl implements UserDao{
 	public Users selectByAccountAndPassword(String account, String password) {
 		// TODO Auto-generated method stub
 		Users user=null;
-		String sql="select * from users where account=? and password=?";
+		String sql=			    
+				"select * " +
+			    "from users u " +
+			    "join roles r " +
+			    "on u.role_id = r.role_id " +
+			    "where u.account=? and u.password=?";
 		try {
 		PreparedStatement ps=conn.prepareStatement(sql);
 		ps.setString(1, account);

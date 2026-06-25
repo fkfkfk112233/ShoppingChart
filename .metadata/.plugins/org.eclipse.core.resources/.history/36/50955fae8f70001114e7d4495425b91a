@@ -1,0 +1,20 @@
+package dao.impl;
+
+import dao.RoleDao;
+
+public class RoleDaoImpl implements RoleDao{
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public int selectByRole(int role_id) {
+		// TODO Auto-generated method stub
+		String sql="select 'role_id' from role";
+		
+		return 0;
+	}
+
+}

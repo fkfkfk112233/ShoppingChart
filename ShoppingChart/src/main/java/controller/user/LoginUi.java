@@ -6,6 +6,11 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import model.Users;
+import model.Roles;
+import service.impl.UserServiceImpl;
+
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JTextField;
@@ -56,6 +61,7 @@ public class LoginUi extends JFrame {
 		contentPane.add(lblNewLabel);
 		
 		/**********************event**********************/
+		UserServiceImpl usi=new UserServiceImpl();
 		
 		acc = new JTextField("請輸入帳號");
 		acc.addFocusListener(new FocusAdapter() {
@@ -104,7 +110,38 @@ public class LoginUi extends JFrame {
 		login.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				String Account=acc.getText();
+				String Password=pwd.getText();
 				
+				Users user=usi.login(Account, Password);
+				
+				if(user!=null)
+				{
+					AdminUi adminui=new AdminUi();
+					adminui.setVisible(true);
+					dispose();
+					/*
+					if(getRoleId() == 1)
+					{
+						AdminUi adminui=new AdminUi();
+						adminui.setVisible(true);
+						dispose();
+					}
+					else
+					{
+						UserUi userui=new UserUi();
+						userui.setVisible(true);
+						dispose();
+					}
+					*/
+				}
+				else
+				{
+					LoginFailed loginfailed=new LoginFailed();
+					loginfailed.setVisible(true);
+					dispose();
+					
+				}
 			}
 		});
 		login.setBounds(120, 190, 84, 22);

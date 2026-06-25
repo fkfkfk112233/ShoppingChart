@@ -1,0 +1,43 @@
+package dao.impl;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import dao.RoleDao;
+import util.DbConnection;
+
+public class RoleDaoImpl implements RoleDao{
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+	
+	Connection conn=DbConnection.getDb();
+
+	@Override
+	public int selectByRole(int role_id) {
+		// TODO Auto-generated method stub
+		String sql="select 'role_id' from roles";
+		int role=0;
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ResultSet rs=ps.executeQuery();
+			
+			if(rs.next())
+			{
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		return role;
+	}
+
+}

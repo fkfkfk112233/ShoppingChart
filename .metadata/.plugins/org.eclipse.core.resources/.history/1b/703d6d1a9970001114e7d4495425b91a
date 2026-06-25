@@ -1,0 +1,53 @@
+package dao.impl;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import dao.RoleDao;
+import model.Roles;
+import util.DbConnection;
+
+public class RoleDaoImpl implements RoleDao{
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+	
+	Connection conn=DbConnection.getDb();
+
+	@Override
+	public String checkRole(String account, String password) {
+		// TODO Auto-generated method stub
+		String sql =
+			    "select * " +
+			    "from users u " +
+			    "join roles r " +
+			    "on u.role_id = r.role_id " +
+			    "where u.account=? and u.password=?";
+		
+		try {
+			PreparedStatement ps=conn.prepareStatement(sql);
+			ps.setString(1, account);
+			ps.setString(2, password);
+		
+			ResultSet rs=ps.executeQuery();
+			
+			if(rs.next())
+			{
+				return rs.getString("role");
+			}
+			
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+		
+		return null;
+	}
+
+
+}

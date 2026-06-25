@@ -1,0 +1,9 @@
+package dao;
+
+import model.Roles;
+
+public interface RoleDao {
+	
+	//判斷使用者
+	String checkRole();
+}
