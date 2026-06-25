@@ -36,6 +36,31 @@ public class UserDaoImpl implements UserDao{
 	}
 
 	@Override
+	public String selectAll() {
+		// TODO Auto-generated method stub
+		String sql="select * from users";
+		String showAll="";
+		try {
+			PreparedStatement ps=conn.prepareStatement(sql);
+			ResultSet rs=ps.executeQuery();
+			while(rs.next())
+			{
+				showAll=showAll
+						+"id:"+rs.getInt("id")
+						+"\t帳號："+rs.getString("account")
+						+"\t密碼："+rs.getString("password")
+						+"\t姓名："+rs.getString("name");
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return showAll;
+	}
+
+	@Override
 	public Users selectByAccount(String account) {
 		// TODO Auto-generated method stub
 		String sql ="select * from users where account=?";
@@ -91,6 +116,18 @@ public class UserDaoImpl implements UserDao{
 		}
 		
 		return null;
+	}
+
+	@Override
+	public void Update(Users user) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void delete(int id) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

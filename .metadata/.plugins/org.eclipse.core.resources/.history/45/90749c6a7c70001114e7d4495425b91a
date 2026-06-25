@@ -1,0 +1,22 @@
+package dao;
+
+import model.Users;
+
+public interface UserDao {
+	
+	//create
+	void insert(Users user);
+	
+	//read
+	Users selectByAccount(String account);
+	
+	//登入
+	Users selectByAccountAndPassword(String account, String password);
+	
+	//update
+	Users void update(int id, String account, String password, String name);
+	
+	//delete
+	Users delete(int id);
+
+}

@@ -1,0 +1,96 @@
+package dao.impl;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+import model.Users;
+import dao.UserDao;
+import util.DbConnection;
+
+public class UserDaoImpl implements UserDao{
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+	
+	Connection conn=DbConnection.getDb();
+
+	@Override
+	public void insert(Users user) {
+		// TODO Auto-generated method stub
+		String sql="Insert into users(account,password,name,role_id)"
+				+"value(?,?,?,?)";
+		try {
+			PreparedStatement ps =conn.prepareStatement(sql);
+	        ps.setString(1, user.getAccount());
+	        ps.setString(2, user.getPassword());
+	        ps.setString(3, user.getName());
+	        ps.setInt(4, user.getRoleId());
+	        ps.executeUpdate();
+		}catch(Exception e) {
+			 e.printStackTrace();
+		}
+	}
+
+	@Override
+	public Users selectByAccount(String account) {
+		// TODO Auto-generated method stub
+		String sql ="select * from users where account=?";
+		
+		try {
+		PreparedStatement ps = conn.prepareStatement(sql);
+		ps.setString(1, account);
+		ResultSet rs = ps.executeQuery();
+		
+		if(rs.next()) {
+			Users user = new Users();
+			
+            user.setUserId(rs.getInt("user_id"));
+            user.setAccount(rs.getString("account"));
+            user.setPassword(rs.getString("password"));
+            user.setName(rs.getString("name"));
+            user.setRoleId(rs.getInt("role_id"));
+            
+            return user;
+		}
+		
+		}catch(Exception e) {
+			 e.printStackTrace();
+		}
+		
+		return null;
+	}
+
+	@Override
+	public Users selectByAccountAndPassword(String account, String password) {
+		// TODO Auto-generated method stub
+		String sql="select * from users where account=? and password=?";
+		try {
+		PreparedStatement ps = conn.prepareStatement(sql);
+		ps.setString(1, account);
+		ps.setString(2, password);
+		ResultSet rs = ps.executeQuery();
+		
+		if(rs.next()) {
+			Users user = new Users();
+			
+            user.setUserId(rs.getInt("user_id"));
+            user.setAccount(rs.getString("account"));
+            user.setPassword(rs.getString("password"));
+            user.setName(rs.getString("name"));
+            user.setRoleId(rs.getInt("role_id"));
+            
+            return user;
+		}
+		
+		}catch(Exception e) {
+			 e.printStackTrace();
+		}
+		
+		return null;
+	}
+
+}
