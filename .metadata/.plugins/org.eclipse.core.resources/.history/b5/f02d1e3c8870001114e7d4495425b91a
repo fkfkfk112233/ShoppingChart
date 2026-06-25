@@ -33,12 +33,15 @@ public class UserServiceImpl implements UserService{
 		
 		Users user = udi.selectByAccount(account);
 		
-	    if(user != null) 
-	    	
-	    	x=true;
+	    if(user != null) {
 
-	        return x;
-	    
+	        return false;
+	    }
+
+	    udi.insert(user);
+
+	    return true;
 	}
+
 
 }
