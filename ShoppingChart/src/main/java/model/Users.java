@@ -59,5 +59,4 @@ public class Users {
 		this.createAt = createAt;
 	}
 	
-	
 }

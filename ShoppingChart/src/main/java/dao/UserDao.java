@@ -14,9 +14,9 @@ public interface UserDao {
 	Users selectByAccountAndPassword(String account, String password);
 	
 	//update
-	void Update(Users user);
+	void update(Users user);
 	
 	//delete
-	void delete(int id);
+	void delete(int userId);
 
 }

@@ -23,9 +23,9 @@ public class UserDaoImpl implements UserDao{
 	public void insert(Users user) {
 		// TODO Auto-generated method stub
 		String sql="Insert into users(account,password,name,role_id)"
-				+"values(?,?,?,?,)";
-		try {
-			PreparedStatement ps =conn.prepareStatement(sql);
+				+"values(?,?,?,?)";
+		try (PreparedStatement ps =conn.prepareStatement(sql)){
+			
 	        ps.setString(1, user.getAccount());
 	        ps.setString(2, user.getPassword());
 	        ps.setString(3, user.getName());
@@ -41,18 +41,18 @@ public class UserDaoImpl implements UserDao{
 	public String selectAll() {
 		// TODO Auto-generated method stub
 		String sql="select * from users";
-		String showAll="";
+		String showAll ="";
 		try {
 			PreparedStatement ps=conn.prepareStatement(sql);
 			ResultSet rs=ps.executeQuery();
 			while(rs.next())
 			{
 				showAll=showAll
-						+"id:"+rs.getInt("id")
+						+"id:"+rs.getInt("user_id")
 						+"\t帳號："+rs.getString("account")
 						+"\t密碼："+rs.getString("password")
 						+"\t姓名："+rs.getString("name")
-						+"\t："+rs.getString("role");
+						+"\t："+rs.getString("role_id");
 				
 			}
 			
@@ -83,6 +83,12 @@ public class UserDaoImpl implements UserDao{
             user.setPassword(rs.getString("password"));
             user.setName(rs.getString("name"));
             user.setRoleId(rs.getInt("role_id"));
+            Timestamp ts = rs.getTimestamp("createAt");
+            
+            if(ts != null)
+            {
+            	user.setCreateAt(ts.toLocalDateTime());
+            }
             
 		}
 		
@@ -113,6 +119,12 @@ public class UserDaoImpl implements UserDao{
 	            user.setPassword(rs.getString("password"));
 	            user.setName(rs.getString("name"));
 	            user.setRoleId(rs.getInt("role_id"));
+	            Timestamp ts = rs.getTimestamp("createAt");
+	            
+	            if(ts != null)
+	            {
+	            	user.setCreateAt(ts.toLocalDateTime());
+	            }
 	            
 			}
 			
@@ -159,13 +171,13 @@ public class UserDaoImpl implements UserDao{
 	}
 
 	@Override
-	public void Update(Users user) {
+	public void update(Users user) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void delete(int id) {
+	public void delete(int userId) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -8,11 +8,10 @@ public interface UserService {
 	Users login(String account, String password);
 	
 	//註冊, 新增
-	void createUser(Users user);
-	
+	Users createUser(Users user);
+		
 	//檢查帳號是否重複
 	boolean checkAccount(String account);
 	
-
 
 }

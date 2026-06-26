@@ -22,23 +22,19 @@ public class UserServiceImpl implements UserService{
 	}
 	
 	@Override
-	public void createUser(Users user) {
+	public Users createUser(Users user) {
 		// TODO Auto-generated method stub
 		udi.insert(user);
+		
+	    return login(
+	            user.getAccount(),
+	            user.getPassword());
 	}
 
 	@Override
 	public boolean checkAccount(String account) {
 		// TODO Auto-generated method stub
-		boolean x=false;
-		
-		Users user = udi.selectByAccount(account);
-		
-	    if(user != null) 
-	    	
-	    	x=true;
-
-	        return x;
+		return udi.selectByAccount(account) != null;	
 	    
 	}
 

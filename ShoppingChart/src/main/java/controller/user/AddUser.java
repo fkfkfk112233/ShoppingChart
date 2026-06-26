@@ -29,6 +29,7 @@ public class AddUser extends JFrame {
 	private JTextField acc;
 	private JTextField pwd;
 	private JTextField name;
+	private Users registerUser;
 
 	/**
 	 * Launch the application.
@@ -110,27 +111,41 @@ public class AddUser extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				String account=acc.getText();
+			    String password = pwd.getText();
+			    String userName = name.getText();
+			    
+			    if(account.isBlank()|| password.isBlank()|| userName.isBlank())
+			    {
+			        msg.setText("請輸入完整資料");
+			        return;
+			    }
 				
 				if(usi.checkAccount(account))
 				{
 					msg.setText("帳號已被註冊");
+					return;
 				}
 				else
 				{
-					String Account=acc.getText();
-					String Password=pwd.getText();
-					String Name=name.getText();
+
 					Roles selectedRole = (Roles) role.getSelectedItem();
 					int RoleId = selectedRole.getRoleId();
 					
 					
 					Users user=new Users();
+					user.setAccount(account);
+					user.setPassword(password);
+					user.setName(userName);
+					user.setRoleId(RoleId);
 					
 					usi.createUser(user);
 					
+					// 記住剛剛註冊的資料
+					registerUser = user;
+					
 					msg.setText("註冊成功");
-					
-					
+						
+				
 				}
 			}
 		});
@@ -138,6 +153,36 @@ public class AddUser extends JFrame {
 		contentPane.add(add);
 		
 		JButton btnNewButton = new JButton("登入");
+		btnNewButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+			    if(registerUser == null) {
+			        msg.setText("請先完成註冊");
+			        return;
+			    }
+			    
+			    Users loginUser = usi.login(
+			            registerUser.getAccount(),
+			            registerUser.getPassword());
+
+			    if(loginUser == null){
+			        msg.setText("登入失敗");
+			        return;
+			    }
+			    
+			    if(loginUser.getRoleId() == 1){
+
+			        new AdminUi().setVisible(true);
+
+			    }else{
+
+			        new UserUi().setVisible(true);
+
+			    }
+
+			    dispose();
+			}
+		});
 		btnNewButton.setBounds(215, 310, 84, 22);
 		contentPane.add(btnNewButton);
 		
