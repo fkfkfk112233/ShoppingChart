@@ -24,8 +24,13 @@ public class UserDaoImpl implements UserDao{
 		// TODO Auto-generated method stub
 		String sql="Insert into users(account,password,name,role_id)"
 				+"values(?,?,?,?)";
+<<<<<<< HEAD
 		try (PreparedStatement ps =conn.prepareStatement(sql)){
 			
+=======
+		try {
+			PreparedStatement ps =conn.prepareStatement(sql);
+>>>>>>> f442d205643a41bb8cf901d635de0bf6388c7ab5
 	        ps.setString(1, user.getAccount());
 	        ps.setString(2, user.getPassword());
 	        ps.setString(3, user.getName());
