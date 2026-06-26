@@ -211,9 +211,8 @@ public class UserDaoImpl implements UserDao{
 			
 			ps.executeUpdate();
 
-		}catch (SQLException e) {
-	        e.printStackTrace();
-		}
+	}catch (SQLException e) {
+        e.printStackTrace();
+    }
 
-	}
 }
