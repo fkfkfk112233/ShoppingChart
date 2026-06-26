@@ -4,6 +4,9 @@
     <fullyQualifiedTypeName name="util.DbConnection"/>
     <fullyQualifiedTypeName name="dao.UserDao"/>
     <fullyQualifiedTypeName name="model.Users"/>
-    <fullyQualifiedTypeName name="service.UserService"/>
     <fullyQualifiedTypeName name="dao.impl.UserDaoImpl"/>
+    <fullyQualifiedTypeName name="model.Roles"/>
+    <fullyQualifiedTypeName name="service.UserService"/>
+    <fullyQualifiedTypeName name="util.tools"/>
+    <fullyQualifiedTypeName name="java.time.LocalTime"/>
 </qualifiedTypeNameHistroy>
