@@ -23,7 +23,7 @@ public class UserDaoImpl implements UserDao{
 	public void insert(Users user) {
 		// TODO Auto-generated method stub
 		String sql="Insert into users(account,password,name,role_id)"
-				+"values(?,?,?,?,)";
+				+"values(?,?,?,?)";
 		try {
 			PreparedStatement ps =conn.prepareStatement(sql);
 	        ps.setString(1, user.getAccount());
