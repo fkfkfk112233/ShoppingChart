@@ -61,7 +61,7 @@ public class LoginUi extends JFrame {
 		contentPane.add(lblNewLabel);
 		
 		JLabel msg = new JLabel("");
-		msg.setBounds(50, 250, 230, 80);
+		msg.setBounds(50, 250, 230, 105);
 		contentPane.add(msg);
 		
 		/**********************event**********************/
