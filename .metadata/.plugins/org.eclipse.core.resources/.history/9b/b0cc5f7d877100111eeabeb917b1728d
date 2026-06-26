@@ -1,0 +1,24 @@
+package dao;
+
+import java.util.List;
+
+import model.Users;
+
+public interface UserDao {
+	
+	//create
+	void insert(Users user);
+	
+	//read
+	List<Users> selectAll();
+	Users selectByAccount(String account);
+	Users selectByName(String name);
+	Users selectByAccountAndPassword(String account, String password);
+	
+	//update
+	void update(Users user);
+	
+	//delete
+	void delete(int userId);
+
+}
