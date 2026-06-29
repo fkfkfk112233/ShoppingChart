@@ -1,0 +1,23 @@
+package dao;
+
+import model.Product;
+
+public interface ProductDao {
+	
+	//create
+	void insert(Product product);
+	
+	//read
+	String selectAll();
+	Product selectByName(String productName);
+	Product selectByPrice(String productPrice);
+	
+	
+	//update
+	void update(Product product);
+	
+	
+	//delete
+	void delete(int productId);
+
+}
