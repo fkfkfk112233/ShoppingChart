@@ -1,0 +1,366 @@
+package controller.user;
+
+import java.awt.EventQueue;
+
+import model.Users;
+import model.Product;
+import service.CartService;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
+
+public class UserUi extends JFrame {
+
+    private static final long serialVersionUID = 1L;
+    private JPanel contentPane;
+
+    private JTextField txtProductId;
+    private JTextField txtProductName;
+    private JTextField txtPrice;
+    private JTextField txtQuantity;
+
+    private JTable table;
+    private DefaultTableModel model;
+
+    public static void main(String[] args) {
+        EventQueue.invokeLater(() -> {
+            try {
+                UserUi frame = new UserUi();
+                frame.setVisible(true);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    public UserUi() {
+
+        setTitle("購物系統");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setBounds(100, 100, 900, 620);
+
+        contentPane = new JPanel();
+        contentPane.setBorder(new EmptyBorder(10,10,10,10));
+        contentPane.setLayout(null);
+        setContentPane(contentPane);
+
+        //-------------------Title--------------------
+
+        JLabel lblTitle = new JLabel("購物系統");
+        lblTitle.setBounds(400, 10, 120, 25);
+        contentPane.add(lblTitle);
+
+        //-------------------Label--------------------
+
+        JLabel lblProductId = new JLabel("商品ID");
+        lblProductId.setBounds(30, 60, 80, 25);
+        contentPane.add(lblProductId);
+
+        JLabel lblProductName = new JLabel("商品名稱");
+        lblProductName.setBounds(30, 100, 80, 25);
+        contentPane.add(lblProductName);
+
+        JLabel lblPrice = new JLabel("商品價格");
+        lblPrice.setBounds(30, 140, 80, 25);
+        contentPane.add(lblPrice);
+
+        JLabel lblQuantity = new JLabel("購買數量");
+        lblQuantity.setBounds(30, 180, 80, 25);
+        contentPane.add(lblQuantity);
+
+        //-------------------TextField--------------------
+
+        txtProductId = new JTextField();
+        txtProductId.setBounds(120, 60, 180, 25);
+        contentPane.add(txtProductId);
+
+        txtProductName = new JTextField();
+        txtProductName.setBounds(120, 100, 180, 25);
+        txtProductName.setEditable(false);
+        contentPane.add(txtProductName);
+
+        txtPrice = new JTextField();
+        txtPrice.setBounds(120, 140, 180, 25);
+        txtPrice.setEditable(false);
+        contentPane.add(txtPrice);
+
+        txtQuantity = new JTextField();
+        txtQuantity.setBounds(120, 180, 180, 25);
+        contentPane.add(txtQuantity);
+
+        //-------------------Buttons--------------------
+
+        JButton btnSearch = new JButton("查詢商品");
+        btnSearch.setBounds(360, 60, 130, 30);
+        contentPane.add(btnSearch);
+
+        JButton btnAdd = new JButton("加入購物車");
+        btnAdd.setBounds(520, 60, 130, 30);
+        contentPane.add(btnAdd);
+
+        JButton btnViewCart = new JButton("查看購物車");
+        btnViewCart.setBounds(680, 60, 150, 30);
+        contentPane.add(btnViewCart);
+
+        JButton btnUpdate = new JButton("修改數量");
+        btnUpdate.setBounds(360, 110, 130, 30);
+        contentPane.add(btnUpdate);
+
+        JButton btnDelete = new JButton("移除商品");
+        btnDelete.setBounds(520, 110, 130, 30);
+        contentPane.add(btnDelete);
+
+        JButton btnClear = new JButton("清空購物車");
+        btnClear.setBounds(680, 110, 150, 30);
+        contentPane.add(btnClear);
+
+        JButton btnLogout = new JButton("登出");
+        btnLogout.setBounds(680, 170, 150, 30);
+        contentPane.add(btnLogout);
+
+        //-------------------Table--------------------
+
+        model = new DefaultTableModel();
+
+        model.addColumn("商品ID");
+        model.addColumn("商品名稱");
+        model.addColumn("單價");
+        model.addColumn("數量");
+        model.addColumn("小計");
+
+        table = new JTable(model);
+
+        JScrollPane scrollPane = new JScrollPane(table);
+        scrollPane.setBounds(30, 250, 820, 300);
+        contentPane.add(scrollPane);
+
+
+  //-------------------event--------------------
+    
+     // 查詢商品
+        btnSearch.addMouseListener(new MouseAdapter() {
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+
+
+                int productId =
+                        Integer.parseInt(txtProductId.getText());
+
+
+                Product product =
+                        productService.getProductById(productId);
+
+
+                if(product != null){
+
+                    txtProductName.setText(
+                            product.getProductName()
+                    );
+
+                    txtPrice.setText(
+                            String.valueOf(product.getProductPrice())
+                    );
+
+
+                }else{
+
+                    txtProductName.setText("查無商品");
+                    txtPrice.setText("");
+
+                }
+
+            }
+
+        });
+
+
+
+        // 加入購物車
+        btnAdd.addMouseListener(new MouseAdapter() {
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+
+
+                int productId =
+                        Integer.parseInt(txtProductId.getText());
+
+
+                int quantity =
+                        Integer.parseInt(txtQuantity.getText());
+
+
+                Product product =
+                        productService.getProductById(productId);
+
+
+
+                if(product != null){
+
+
+                    int sum =
+                      product.getProductPrice()
+                      * quantity;
+
+
+
+                    Cart cart = new Cart();
+
+                    cart.setUserId(loginUserId);
+                    cart.setProductId(productId);
+                    cart.setQuantity(quantity);
+                    cart.setSum(sum);
+
+
+
+                    cartService.addCart(cart);
+
+
+                    refreshCart();
+
+
+                }
+
+            }
+
+        });
+
+
+
+
+        // 查看購物車
+        btnViewCart.addMouseListener(new MouseAdapter(){
+
+            @Override
+            public void mouseClicked(MouseEvent e){
+
+
+                String data =
+                  cartService.getMyCart(loginUserId);
+
+
+                model.setRowCount(0);
+
+
+                System.out.println(data);
+
+            }
+
+        });
+
+
+
+
+        // 修改數量
+        btnUpdate.addMouseListener(new MouseAdapter(){
+
+
+            @Override
+            public void mouseClicked(MouseEvent e){
+
+
+                int productId =
+                    Integer.parseInt(
+                    txtProductId.getText());
+
+
+                int quantity =
+                    Integer.parseInt(
+                    txtQuantity.getText());
+
+
+
+                Cart cart = new Cart();
+
+
+                cart.setUserId(loginUserId);
+                cart.setProductId(productId);
+                cart.setQuantity(quantity);
+
+
+
+                Product product =
+                  productService
+                  .getProductById(productId);
+
+
+
+                cart.setSum(
+                  product.getProductPrice()
+                  * quantity
+                );
+
+
+
+                cartService.updateCart(cart);
+
+
+
+                refreshCart();
+
+
+            }
+
+        });
+
+
+
+
+        // 刪除商品
+        btnDelete.addMouseListener(new MouseAdapter(){
+
+
+            @Override
+            public void mouseClicked(MouseEvent e){
+
+
+                int productId =
+                    Integer.parseInt(
+                    txtProductId.getText());
+
+
+
+                cartService.removeProduct(
+                    loginUserId,
+                    productId
+                );
+
+
+                refreshCart();
+
+
+            }
+
+        });
+
+
+
+
+        // 清空購物車
+        btnClear.addMouseListener(new MouseAdapter(){
+
+
+            @Override
+            public void mouseClicked(MouseEvent e){
+
+
+                cartService
+                .clearCart(loginUserId);
+
+
+
+                refreshCart();
+
+
+            }
+
+        });
+}

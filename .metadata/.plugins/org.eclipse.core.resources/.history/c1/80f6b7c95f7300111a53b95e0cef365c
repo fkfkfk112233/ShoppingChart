@@ -1,0 +1,10 @@
+package dao.impl;
+
+public class CartDaoImpl {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

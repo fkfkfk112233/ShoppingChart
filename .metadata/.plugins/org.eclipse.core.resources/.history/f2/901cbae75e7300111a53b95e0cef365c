@@ -1,0 +1,28 @@
+package dao;
+
+import model.Chart;
+
+public interface ChartDao {
+
+    // 新增購物車
+    void insert(Chart chart);
+
+    // 查詢全部
+    String selectAll();
+
+    // 依使用者查詢
+    String selectByUserId(int userId);
+
+    // 依商品查詢
+    Chart selectByProductId(int productId);
+
+    // 修改
+    void update(Chart chart);
+
+    // 刪除指定商品
+    void delete(int productId);
+
+    // 清空購物車
+    void deleteByUserId(int userId);
+
+}
