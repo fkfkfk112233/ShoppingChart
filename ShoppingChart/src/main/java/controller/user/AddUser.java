@@ -51,6 +51,7 @@ public class AddUser extends JFrame {
 	 * Create the frame.
 	 */
 	public AddUser() {
+		setTitle("註冊系統");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 350, 420);
 		contentPane = new JPanel();
@@ -177,7 +178,7 @@ public class AddUser extends JFrame {
 			    }
 			    if(loginUser.getRoleId() == 3){
 
-			        new UserUi().setVisible(true);
+			        new UserUi(loginUser).setVisible(true);
 
 			    }
 

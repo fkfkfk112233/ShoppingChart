@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import dao.ProductDao;
 import model.Product;
@@ -20,13 +21,21 @@ public class ProductDaoImpl implements ProductDao {
                 "INSERT INTO product(product_name,product_amount,product_price) " +
                 "VALUES(?,?,?)";
 
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             ps.setString(1, product.getProductName());
             ps.setInt(2, product.getProductAmount());
             ps.setInt(3, product.getProductPrice());
 
             ps.executeUpdate();
+
+            // 把資料庫自動產生的 product_id 寫回 product 物件，
+            // 這樣呼叫端（Service／UI）才能拿到新商品真正的 ID
+            try (ResultSet rs = ps.getGeneratedKeys()) {
+                if (rs.next()) {
+                    product.setProductId(rs.getInt(1));
+                }
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -37,29 +46,25 @@ public class ProductDaoImpl implements ProductDao {
     @Override
     public String selectAll() {
 
-        StringBuilder sb = new StringBuilder();
-
         String sql = "SELECT * FROM product";
-		String showAll ="";
-		try {
-			PreparedStatement ps=conn.prepareStatement(sql);
-			ResultSet rs=ps.executeQuery();
-			while(rs.next())
-			{
-				showAll=showAll
-						+"商品編號:"+rs.getInt("product_id")
-						+"\t商品名稱："+rs.getString("product_name")
-						+"\t庫存："+rs.getString("product_amount")
-						+"\t價格："+rs.getString("product_price");
-				
-			}
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return showAll;
+        String showAll = "";
+
+        try (PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                showAll = showAll
+                        + "商品編號:" + rs.getInt("product_id")
+                        + "\t商品名稱：" + rs.getString("product_name")
+                        + "\t庫存：" + rs.getString("product_amount")
+                        + "\t價格：" + rs.getString("product_price");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return showAll;
     }
 
     @Override

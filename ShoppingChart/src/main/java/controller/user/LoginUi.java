@@ -48,6 +48,7 @@ public class LoginUi extends JFrame {
 	 * Create the frame.
 	 */
 	public LoginUi() {
+		setTitle("登入系統");		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 350, 420);
 		contentPane = new JPanel();
@@ -128,7 +129,7 @@ public class LoginUi extends JFrame {
 					}
 					if(user.getRoleId() == 3)
 					{
-						new UserUi().setVisible(true);
+						new UserUi(user).setVisible(true);
 						
 					}
 					

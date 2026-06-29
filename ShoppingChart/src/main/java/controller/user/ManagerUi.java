@@ -1,16 +1,23 @@
 package controller.user;
 
 import java.awt.EventQueue;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+
+import model.Product;
+import service.ProductService;
+import service.impl.ProductServiceImpl;
 
 public class ManagerUi extends JFrame {
 
@@ -24,6 +31,8 @@ public class ManagerUi extends JFrame {
 
     private JTable table;
     private DefaultTableModel model;
+
+    private ProductService productService = new ProductServiceImpl();
 
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
@@ -129,6 +138,179 @@ public class ManagerUi extends JFrame {
         scrollPane.setBounds(30, 240, 740, 290);
         contentPane.add(scrollPane);
 
+        //-------------------Listener-------------------
+
+        // ===============================
+        // 新增商品
+        // ===============================
+        btnInsert.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+
+                String name = txtProductName.getText().trim();
+                int amount = getInt(txtAmount);
+                int price = getInt(txtPrice);
+
+                if (name.isEmpty() || amount == -1 || price == -1) {
+                    return;
+                }
+
+                Product product = new Product();
+                product.setProductName(name);
+                product.setProductAmount(amount);
+                product.setProductPrice(price);
+
+                Product created = productService.createProduct(product);
+
+                if (created != null) {
+                    JOptionPane.showMessageDialog(null, "新增成功，商品ID：" + created.getProductId());
+                    showProductInTable(created);
+                    clearFields();
+                } else {
+                    JOptionPane.showMessageDialog(null, "新增失敗");
+                }
+            }
+        });
+
+        // ===============================
+        // 修改商品
+        // ===============================
+        btnUpdate.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+
+                int id = getInt(txtProductId);
+
+                if (id == -1) {
+                    return;
+                }
+
+                String name = txtProductName.getText().trim();
+                int amount = getInt(txtAmount);
+                int price = getInt(txtPrice);
+
+                if (name.isEmpty() || amount == -1 || price == -1) {
+                    return;
+                }
+
+                Product product = new Product();
+                product.setProductId(id);
+                product.setProductName(name);
+                product.setProductAmount(amount);
+                product.setProductPrice(price);
+
+                Product updated = productService.updateProduct(product);
+
+                if (updated != null) {
+                    JOptionPane.showMessageDialog(null, "修改成功");
+                    showProductInTable(updated);
+                } else {
+                    JOptionPane.showMessageDialog(null, "修改失敗，找不到該商品");
+                }
+            }
+        });
+
+        // ===============================
+        // 刪除商品
+        // ===============================
+        btnDelete.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+
+                int id = getInt(txtProductId);
+
+                if (id == -1) {
+                    return;
+                }
+
+                productService.deleteProduct(id);
+
+                JOptionPane.showMessageDialog(null, "已刪除商品 ID：" + id);
+
+                clearFields();
+                model.setRowCount(0);
+            }
+        });
+
+        // ===============================
+        // 查詢全部
+        // ===============================
+        btnSelectAll.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+
+                String data = productService.getAllProducts();
+
+                System.out.println(data);
+
+                // TODO: getAllProducts() 目前回傳 String，無法直接拆解填入表格的多列資料。
+                // 建議改回傳 List<Product>，再用迴圈呼叫
+                // model.addRow(new Object[]{ id, name, amount, price, createAt })
+                // 才能讓 JTable 真正顯示所有商品。
+                JOptionPane.showMessageDialog(null, "查詢結果已輸出到 Console，請查看主控台視窗。");
+            }
+        });
+
+        // ===============================
+        // 依ID查詢
+        // ===============================
+        btnSelectId.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+
+                int id = getInt(txtProductId);
+
+                if (id == -1) {
+                    return;
+                }
+
+                Product product = productService.getProductById(id);
+
+                if (product != null) {
+                    txtProductName.setText(product.getProductName());
+                    txtAmount.setText(String.valueOf(product.getProductAmount()));
+                    txtPrice.setText(String.valueOf(product.getProductPrice()));
+
+                    showProductInTable(product);
+                } else {
+                    txtProductName.setText("查無商品");
+                    txtAmount.setText("");
+                    txtPrice.setText("");
+                    model.setRowCount(0);
+                }
+            }
+        });
+
+        // ===============================
+        // 清空
+        // ===============================
+        btnClear.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                clearFields();
+            }
+        });
     }
 
+    private int getInt(JTextField field) {
+
+        try {
+            return Integer.parseInt(field.getText().trim());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "請輸入正確數字");
+            return -1;
+        }
+    }
+
+    private void clearFields() {
+        txtProductId.setText("");
+        txtProductName.setText("");
+        txtAmount.setText("");
+        txtPrice.setText("");
+    }
+
+    private void showProductInTable(Product product) {
+        model.setRowCount(0);
+        model.addRow(new Object[] {
+            product.getProductId(),
+            product.getProductName(),
+            product.getProductAmount(),
+            product.getProductPrice(),
+            product.getCreateAt()
+        });
+    }
 }
