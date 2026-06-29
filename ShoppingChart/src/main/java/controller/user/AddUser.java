@@ -101,8 +101,8 @@ public class AddUser extends JFrame {
 		UserService usi=new UserServiceImpl();
 		
 		JComboBox<Roles> role = new JComboBox<>();
-		role.addItem(new Roles(2, "一般使用者"));
-		role.addItem(new Roles(1, "管理員"));
+		role.addItem(new Roles(3, "一般使用者"));
+		role.addItem(new Roles(2, "管理員"));
 		role.setBounds(196, 154, 105, 22);
 		contentPane.add(role);
 		
@@ -170,11 +170,12 @@ public class AddUser extends JFrame {
 			        return;
 			    }
 			    
-			    if(loginUser.getRoleId() == 1){
+			    if(loginUser.getRoleId() == 2){
 
-			        new AdminUi().setVisible(true);
+			        new ManagerUi().setVisible(true);
 
-			    }else{
+			    }
+			    if(loginUser.getRoleId() == 3){
 
 			        new UserUi().setVisible(true);
 

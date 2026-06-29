@@ -122,11 +122,11 @@ public class LoginUi extends JFrame {
 				if(user!=null)
 				{
 
-					if(user.getRoleId() == 1)
+					if(user.getRoleId() == 2)
 					{
-						new AdminUi().setVisible(true);
+						new ManagerUi().setVisible(true);
 					}
-					else
+					if(user.getRoleId() == 3)
 					{
 						new UserUi().setVisible(true);
 						
