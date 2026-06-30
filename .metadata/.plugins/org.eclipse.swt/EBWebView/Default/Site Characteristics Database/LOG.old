@@ -1,3 +1,6 @@
-2026/06/27-03:51:18.914 2848 Reusing MANIFEST C:\Users\user\OneDrive\Desktop\ShoppingChart\.metadata\.plugins\org.eclipse.swt\EBWebView\Default\Site Characteristics Database/MANIFEST-000001
-2026/06/27-03:51:18.919 2848 Recovering log #3
-2026/06/27-03:51:18.920 2848 Reusing old log C:\Users\user\OneDrive\Desktop\ShoppingChart\.metadata\.plugins\org.eclipse.swt\EBWebView\Default\Site Characteristics Database/000003.log 
+2026/06/30-16:14:31.445 1b4c Log #6: 1 ops saved to Table #7 OK
+2026/06/30-16:14:31.451 1b4c Archiving C:\Users\student\Desktop\SoppingChart\.metadata\.plugins\org.eclipse.swt\EBWebView\Default\Site Characteristics Database/000006.log: OK
+2026/06/30-16:14:31.451 1b4c Table #4: 4 entries OK
+2026/06/30-16:14:31.451 1b4c Table #7: 1 entries OK
+2026/06/30-16:14:31.452 1b4c Archiving C:\Users\student\Desktop\SoppingChart\.metadata\.plugins\org.eclipse.swt\EBWebView\Default\Site Characteristics Database/MANIFEST-000001: OK
+2026/06/30-16:14:31.459 1b4c **** Repaired leveldb C:\Users\student\Desktop\SoppingChart\.metadata\.plugins\org.eclipse.swt\EBWebView\Default\Site Characteristics Database; recovered 2 files; 385 bytes. Some data may have been lost. ****
