@@ -173,7 +173,7 @@ public class AddUser extends JFrame {
 			    
 			    if(loginUser.getRoleId() == 2){
 
-			        new ManagerUi().setVisible(true);
+			        new ManagerTest().setVisible(true);
 
 			    }
 			    if(loginUser.getRoleId() == 3){

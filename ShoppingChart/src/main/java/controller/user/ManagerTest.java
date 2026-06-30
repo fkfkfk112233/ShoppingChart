@@ -19,7 +19,7 @@ import model.Product;
 import service.ProductService;
 import service.impl.ProductServiceImpl;
 
-public class ManagerUi extends JFrame {
+public class ManagerTest extends JFrame {
 
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
@@ -37,7 +37,7 @@ public class ManagerUi extends JFrame {
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
             try {
-                ManagerUi frame = new ManagerUi();
+                ManagerTest frame = new ManagerTest();
                 frame.setVisible(true);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -45,7 +45,7 @@ public class ManagerUi extends JFrame {
         });
     }
 
-    public ManagerUi() {
+    public ManagerTest() {
 
         setTitle("商品管理系統");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

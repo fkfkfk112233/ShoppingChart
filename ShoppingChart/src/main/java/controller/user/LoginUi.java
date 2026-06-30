@@ -125,7 +125,7 @@ public class LoginUi extends JFrame {
 
 					if(user.getRoleId() == 2)
 					{
-						new ManagerUi().setVisible(true);
+						new ManagerTest().setVisible(true);
 					}
 					if(user.getRoleId() == 3)
 					{
